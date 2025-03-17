@@ -18,7 +18,7 @@ const loadProfiles = function() {
         '            <div class="main__profile-item-description"><%= description %></div>' +
         '        </div>');
 
-    $.get(datingUrl.getBaseUrl() + 'api/profiles/').done(function (profiles) {
+    $.get(datingUrl.getBaseUrl() + 'api/profiles').done(function (profiles) {
         const $profileListDiv = $('#profileListDiv');
         profiles.forEach(function (profile) {
             const $profile = $(profileTempl({

@@ -12,11 +12,11 @@
         http://www.liquibase.org/xml/ns/pro/liquibase-pro-latest.xsd">
 
     <changeSet id="osantamaria-001" author="osantamaria">
-        <preConditions onFail="MARK_RAN">
+        <!--<preConditions onFail="MARK_RAN">
             <not>
                 <tableExists tableName="breeds" />
             </not>
-        </preConditions>
+        </preConditions>-->
         <createTable tableName="breeds">
             <column name="bre_id" type="int" autoIncrement="true">
                 <constraints nullable="false" primaryKey="true" primaryKeyName="pk_breeds" />
@@ -26,4 +26,59 @@
             </column>
         </createTable>
     </changeSet>
+
+    <changeSet id="osantamaria-002" author="osantamaria">
+        <insert tableName="breeds">
+            <column name="bre_name">Golden Retriever</column>
+        </insert>
+        <insert tableName="breeds">
+            <column name="bre_name">American Staffordshire Terrier</column>
+        </insert>
+        <insert tableName="breeds">
+            <column name="bre_name">German Shepherd Doger</column>
+        </insert>
+    </changeSet>
+
+    <changeSet id="osantamaria-003" author="osantamaria">
+        <!--<preConditions onFail="MARK_RAN">
+            <not>
+                <tableExists tableName="profiles" />
+            </not>
+        </preConditions>-->
+        <createTable tableName="profiles">
+            <column name="pro_id" type="int" autoIncrement="true">
+                <constraints nullable="false" primaryKey="true" primaryKeyName="pk_profiles" />
+            </column>
+            <column name="pro_name" type="varchar(100)">
+                <constraints nullable="false" />
+            </column>
+            <column name="pro_bre_id" type="int" />
+            <column name="pro_height" type="int" />
+            <column name="pro_weight" type="int" />
+            <column name="pro_description" type="varchar(4000)" />
+            <column name="pro_image_url" type="varchar(100)" />
+        </createTable>
+    </changeSet>
+
+    <changeSet id="osantamaria-004" author="osantamaria">
+        <createIndex tableName="profiles" indexName="ix_profiles_breeds_id">
+            <column name="pro_bre_id" />
+        </createIndex>
+    </changeSet>
+
+    <changeSet id="osantamaria-005" author="osantamaria">
+        <addForeignKeyConstraint baseTableName="profiles"
+                                 baseColumnNames="pro_bre_id"
+                                 constraintName="fk_profiles_breeds_id"
+                                 referencedTableName="breeds"
+                                 referencedColumnNames="bre_id"
+        />
+    </changeSet>
+
+    <changeSet id="osantamaria-006" author="osantamaria">
+        <addColumn tableName="profiles">
+            <column name="pro_gender" type="char(1)" />
+        </addColumn>
+    </changeSet>
+
 </databaseChangeLog>
