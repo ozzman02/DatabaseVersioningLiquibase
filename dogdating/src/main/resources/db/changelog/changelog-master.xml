@@ -12,11 +12,6 @@
         http://www.liquibase.org/xml/ns/pro/liquibase-pro-latest.xsd">
 
     <changeSet id="osantamaria-001" author="osantamaria">
-        <!--<preConditions onFail="MARK_RAN">
-            <not>
-                <tableExists tableName="breeds" />
-            </not>
-        </preConditions>-->
         <createTable tableName="breeds">
             <column name="bre_id" type="int" autoIncrement="true">
                 <constraints nullable="false" primaryKey="true" primaryKeyName="pk_breeds" />
@@ -37,14 +32,12 @@
         <insert tableName="breeds">
             <column name="bre_name">German Shepherd Doger</column>
         </insert>
+        <rollback>
+            <delete tableName="breeds" />
+        </rollback>
     </changeSet>
 
     <changeSet id="osantamaria-003" author="osantamaria">
-        <!--<preConditions onFail="MARK_RAN">
-            <not>
-                <tableExists tableName="profiles" />
-            </not>
-        </preConditions>-->
         <createTable tableName="profiles">
             <column name="pro_id" type="int" autoIncrement="true">
                 <constraints nullable="false" primaryKey="true" primaryKeyName="pk_profiles" />
